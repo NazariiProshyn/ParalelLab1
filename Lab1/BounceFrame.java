@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,28 +23,27 @@ public class BounceFrame extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.lightGray);
         JButton buttonStart = new JButton("Start");
+        JButton buttonJoin = new JButton("Join");
         JButton buttonStop = new JButton("Stop");
+
         buttonStart.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                Ball b = new Ball(canvas);
-                canvas.add(b);
-
-                BallThread thread = new BallThread(b);
-                thread.start();
-                System.out.println("Thread name = " +
-                        thread.getName());
+                NewThreads spawner = new NewThreads(5, canvas);
+                spawner.start();
             }
         });
+
         buttonStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 System.exit(0);
             }
-        }); buttonPanel.add(buttonStart);
+        });
+        buttonPanel.add(buttonStart);
+        buttonPanel.add(buttonJoin);
         buttonPanel.add(buttonStop);
 
         content.add(buttonPanel, BorderLayout.SOUTH);
