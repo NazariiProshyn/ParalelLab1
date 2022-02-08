@@ -6,11 +6,12 @@ class Ball {
     private Component canvas;
     private static final int XSIZE = 20;
     private static final int YSIZE = 20;
+    private int radiusBall = 10;
     private int x = 0;
     private int y= 0;
     private int dx = 2;
     private int dy = 2;
-
+    public boolean ballINHole = false;
 
     public Ball(Component c){
         this.canvas = c;
@@ -29,6 +30,11 @@ class Ball {
         int a = 0;
     }
 
+    public boolean checkBallInHall(int coordinate,int radius){
+        ballINHole = (radius + radiusBall) >
+                Math.sqrt((Math.pow(coordinate - x,2) + Math.pow(coordinate - y,2)));
+        return ballINHole;
+    }
     public void draw (Graphics2D g2){
         g2.setColor(Color.darkGray);
         g2.fill(new Ellipse2D.Double(x,y,XSIZE,YSIZE));
