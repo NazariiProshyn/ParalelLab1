@@ -1,16 +1,12 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class BounceFrame extends JFrame {
     private BallCanvas canvas;
-    public static final int WIDTH = 450;
-    public static final int HEIGHT = 350;
+    public static final int WIDTH = 700;
+    public static final int HEIGHT = 700;
     public BounceFrame() {
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Bounce programm Task 1");
@@ -23,11 +19,12 @@ public class BounceFrame extends JFrame {
         buttonPanel.setBackground(Color.lightGray);
         JButton buttonStart = new JButton("Start");
         JButton buttonStop = new JButton("Stop");
+        JLabel label1 = new JLabel("Balls in hole: " + Integer.toString(0));
         buttonStart.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                label1.setText("Label Text");
                 Ball b = new Ball(canvas);
                 canvas.add(b);
 
@@ -43,9 +40,11 @@ public class BounceFrame extends JFrame {
 
                 System.exit(0);
             }
-        }); buttonPanel.add(buttonStart);
+        });
+        buttonPanel.add(buttonStart);
         buttonPanel.add(buttonStop);
 
+        buttonPanel.add(label1);
         content.add(buttonPanel, BorderLayout.SOUTH);
     }
 }
