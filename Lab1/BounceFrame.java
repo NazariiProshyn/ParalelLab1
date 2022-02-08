@@ -28,20 +28,11 @@ public class BounceFrame extends JFrame {
             boolean redColor   = true;
             boolean blueColor  = false;
             int numOfRedBalls  = 1;
-            int numOfBlueBalls = 10;
+            int numOfBlueBalls = 1000;
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(int i = 0; i < numOfRedBalls; ++i)
-                {
-                    Ball b = new Ball(canvas,redColor);
-                    canvas.add(b);
 
-                    BallThread thread = new BallThread(b);
-                    thread.start();
-                    System.out.println("Thread name = " +
-                            thread.getName());
-                }
 
                 for(int i = 0; i < numOfBlueBalls; ++i)
                 {
@@ -49,6 +40,19 @@ public class BounceFrame extends JFrame {
                     canvas.add(b);
 
                     BallThread thread = new BallThread(b);
+                    thread.setPriority(Thread.MIN_PRIORITY);
+                    thread.start();
+                    System.out.println("Thread name = " +
+                            thread.getName());
+                }
+
+                for(int i = 0; i < numOfRedBalls; ++i)
+                {
+                    Ball b = new Ball(canvas,redColor);
+                    canvas.add(b);
+
+                    BallThread thread = new BallThread(b);
+                    thread.setPriority(Thread.MAX_PRIORITY);
                     thread.start();
                     System.out.println("Thread name = " +
                             thread.getName());

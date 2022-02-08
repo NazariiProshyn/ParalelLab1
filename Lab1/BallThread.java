@@ -11,7 +11,7 @@ public class BallThread extends Thread {
                 b.move();
                 System.out.println("Thread name = "
                         + Thread.currentThread().getName());
-                Thread.sleep(5);
+                Thread.sleep(10);
 
             }
         } catch(InterruptedException ex){ }

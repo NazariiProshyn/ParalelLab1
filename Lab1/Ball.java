@@ -4,10 +4,12 @@ import java.util.Random;
 
 class Ball {
     private Component canvas;
-    private static final int XSIZE = 20;
-    private static final int YSIZE = 20;
+    private static final int RXSIZE = 20;
+    private static final int RYSIZE = 20;
+    private static final int BXSIZE = 20;
+    private static final int BYSIZE = 20;
     private int x = 0;
-    private int y= 0;
+    private int y = 0;
     private int dx = 2;
     private int dy = 2;
     private boolean colorOfBall = false;
@@ -15,14 +17,6 @@ class Ball {
     public Ball(Component c,Boolean color){
         this.canvas = c;
         colorOfBall = color;
-
-        if(Math.random()<0.5){
-            x = new Random().nextInt(this.canvas.getWidth());
-            y = 0;
-        }else{
-            x = 0;
-            y = new Random().nextInt(this.canvas.getHeight());
-        }
     }
 
     public static void f(){
@@ -33,12 +27,14 @@ class Ball {
         if(colorOfBall)
         {
             g2.setColor(Color.RED);
+            g2.fill(new Ellipse2D.Double(x,y,RXSIZE,RXSIZE));
         }
         else
         {
             g2.setColor(Color.BLUE);
+            g2.fill(new Ellipse2D.Double(x,y,BXSIZE,BXSIZE));
         }
-        g2.fill(new Ellipse2D.Double(x,y,XSIZE,YSIZE));
+
 
     }
 
@@ -49,15 +45,15 @@ class Ball {
             x = 0;
             dx = -dx;
         }
-        if(x+XSIZE>=this.canvas.getWidth()){
-            x = this.canvas.getWidth()-XSIZE;dx = -dx;
+        if(x+RXSIZE>=this.canvas.getWidth()){
+            x = this.canvas.getWidth()-RXSIZE;dx = -dx;
         }
         if(y<0){
             y=0;
             dy = -dy;
         }
-        if(y+YSIZE>=this.canvas.getHeight()){
-            y = this.canvas.getHeight()-YSIZE;
+        if(y+RYSIZE>=this.canvas.getHeight()){
+            y = this.canvas.getHeight()-RYSIZE;
             dy = -dy;
         }
         this.canvas.repaint();
