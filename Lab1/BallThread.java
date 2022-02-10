@@ -1,21 +1,32 @@
-import java.awt.*;
-
-public class BallThread extends Thread {
+public class BallThread extends Thread{
     private Ball b;
-    private boolean onceJoin = true;
-    public BallThread(Ball ball){
+    public static int finishedThreadCount = 0;
+    private Thread threadToJoin;
+
+    public BallThread(Ball ball) {
         b = ball;
     }
-    @Override
-    public void run(){
-        try{
-            for(int i=1; i<1000; i++){
-                b.move();
-                System.out.println("Thread name = "
-                        + Thread.currentThread().getName());
-                Thread.sleep(5);
 
+    public void setThreadToJoin(Thread thread) {
+        threadToJoin = thread;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Started Thread name : " + Thread.currentThread().getName());
+        try {
+            while(b.getIsInHole() == false) {
+                if (b.get_isJoined() && threadToJoin != null) {
+                    threadToJoin.join();
+                }
+                b.move();
+                Thread.sleep(5);
             }
-        } catch(InterruptedException ex){ }
+        }
+        catch (InterruptedException ex) {
+            System.out.println("Interrupted Thread name : " + Thread.currentThread().getName());
+        }
+        System.out.println("Finished Thread name : " + Thread.currentThread().getName());
+        finishedThreadCount += 1;
     }
 }

@@ -1,51 +1,74 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class BounceFrame extends JFrame {
+
+public class BounceFrame extends JFrame{
     private BallCanvas canvas;
     public static final int WIDTH = 450;
     public static final int HEIGHT = 350;
+    public static final int BALLS_COUNT = 10;
+
     public BounceFrame() {
-        this.setSize(WIDTH, HEIGHT);
-        this.setTitle("Bounce programm Task 1");
-        this.canvas = new BallCanvas();
-        System.out.println("In Frame Thread name = "
-                + Thread.currentThread().getName());
-        Container content = this.getContentPane();
-        content.add(this.canvas, BorderLayout.CENTER);
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.lightGray);
+        setSize(WIDTH, HEIGHT);
+        setTitle("Bounce program");
+
+        canvas = new BallCanvas();
+        System.out.println("In Frame Thread Name = " + Thread.currentThread().getName());
+
+        Container content = getContentPane();
+        content.add(canvas, BorderLayout.CENTER);
+
+        JPanel buttonPatel = new JPanel();
+        buttonPatel.setBackground(Color.lightGray);
+
         JButton buttonStart = new JButton("Start");
-        JButton buttonJoin = new JButton("Join");
         JButton buttonStop = new JButton("Stop");
+        JButton buttonJoin = new JButton("Join");
 
-        buttonStart.addActionListener(new ActionListener() {
-
+        buttonJoin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                NewThreads spawner = new NewThreads(5, canvas);
-                spawner.start();
+                canvas.joinBalls();
+            }
+        });
+
+        buttonStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Ball redBall = new Ball(canvas, Color.red);
+                canvas.add(redBall);
+                BallThread redThread = new BallThread(redBall);
+                redThread.start();
+
+                Ball blueBall = new Ball(canvas, Color.blue);
+                canvas.add(blueBall);
+                BallThread blueThread = new BallThread(blueBall);
+                blueThread.setThreadToJoin(redThread);
+                blueThread.start();
+
+                Ball greenBall = new Ball(canvas, Color.green);
+                canvas.add(greenBall);
+                BallThread greenThread = new BallThread(greenBall);
+                greenThread.setThreadToJoin(redThread);
+                greenThread.start();
             }
         });
 
         buttonStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 System.exit(0);
             }
         });
-        buttonPanel.add(buttonStart);
-        buttonPanel.add(buttonJoin);
-        buttonPanel.add(buttonStop);
 
-        content.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPatel.add(buttonStart);
+        buttonPatel.add(buttonStop);
+        buttonPatel.add(buttonJoin);
+
+        content.add(buttonPatel, BorderLayout.SOUTH);
     }
 }
