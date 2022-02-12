@@ -5,13 +5,11 @@ import java.util.Random;
 public class Ball {
     private static final int XSIZE = 20;
     private static final int YSIZE = 20;
-    private static final int HOLE_SIZE = 25;
     private int x = 0;
     private int y = 0;
     private int dx = 2;
     private int dy = 2;
     private Component canvas;
-    private boolean isInHole = false;
     private Color ballColor;
     private boolean isJoined;
 
@@ -25,15 +23,11 @@ public class Ball {
             x = 0;
             y = new Random().nextInt(this.canvas.getHeight());
         }
-//        x = canvas.getWidth() / 2;
-//        y = canvas.getHeight() / 2;
     }
 
     public void draw(Graphics2D g2) {
-        if (isInHole == false) {
-            g2.setColor(ballColor);
-            g2.fill(new Ellipse2D.Double(x, y, XSIZE, YSIZE));
-        }
+        g2.setColor(ballColor);
+        g2.fill(new Ellipse2D.Double(x, y, XSIZE, YSIZE));
     }
 
     public void move() {
@@ -55,15 +49,8 @@ public class Ball {
             y = canvas.getHeight() - YSIZE;
             dy = -dy;
         }
-        isInHole = isHole();
-        this.canvas.repaint();
-    }
 
-    private boolean isHole() {
-        return (x < HOLE_SIZE && y < HOLE_SIZE) ||
-                (x < HOLE_SIZE && y > canvas.getHeight() - HOLE_SIZE) ||
-                (x > canvas.getWidth() - HOLE_SIZE && y < HOLE_SIZE) ||
-                (x > canvas.getWidth() - HOLE_SIZE && y > canvas.getHeight() - HOLE_SIZE);
+        this.canvas.repaint();
     }
 
     public void set_isJoin(boolean joined) {
@@ -72,9 +59,5 @@ public class Ball {
 
     public boolean get_isJoined() {
         return isJoined;
-    }
-
-    public boolean getIsInHole() {
-        return isInHole;
     }
 }
