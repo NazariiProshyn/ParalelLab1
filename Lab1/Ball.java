@@ -11,7 +11,7 @@ public class Ball {
     private int dy = 2;
     private Component canvas;
     private Color ballColor;
-    private boolean isJoined;
+    private boolean joined;
 
     public Ball(Component c, Color color) {
         this.canvas = c;
@@ -53,11 +53,11 @@ public class Ball {
         this.canvas.repaint();
     }
 
-    public void set_isJoin(boolean joined) {
-        isJoined = joined;
+    public void join(boolean joined) {
+        this.joined = joined;
     }
 
-    public boolean get_isJoined() {
-        return isJoined;
+    public boolean checkJoined() {
+        return joined;
     }
 }

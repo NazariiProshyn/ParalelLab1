@@ -45,7 +45,7 @@ public class BounceFrame extends JFrame{
                 Ball b3 = new Ball(canvas, Color.green);
                 canvas.add(b3);
                 BallThread thread3 = new BallThread(b3);
-                thread3.setThreadToJoin(thread1);
+                thread3.setJoinedThread(thread1);
                 thread3.start();
             }
         });
@@ -53,7 +53,7 @@ public class BounceFrame extends JFrame{
         buttonJoin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.joinBalls();
+                canvas.join();
             }
         });
 

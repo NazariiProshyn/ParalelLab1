@@ -9,10 +9,10 @@ public class BallCanvas extends JPanel{
         balls.add(b);
     }
 
-    public void joinBalls() {
+    public void join() {
         for (int i = 0; i < balls.size(); i++) {
             Ball b = balls.get(i);
-            b.set_isJoin(true);
+            b.join(true);
         }
     }
 

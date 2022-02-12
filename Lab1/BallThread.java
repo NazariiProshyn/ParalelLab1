@@ -1,15 +1,15 @@
 public class BallThread extends Thread{
     private Ball b;
-    public static int finishedThreadCount = 0;
-    private Thread threadToJoin;
+    public static int threadCount = 0;
+    private Thread joinedThread;
 
     public BallThread(Ball ball)
     {
         b = ball;
     }
 
-    public void setThreadToJoin(Thread thread) {
-        threadToJoin = thread;
+    public void setJoinedThread(Thread thread) {
+        joinedThread = thread;
     }
 
     @Override
@@ -18,8 +18,8 @@ public class BallThread extends Thread{
         try {
 
             for(int i=1; i<1000; i++){
-                if (b.get_isJoined() && threadToJoin != null) {
-                    threadToJoin.join();
+                if (b.checkJoined()) {
+                    joinedThread.join();
                 }
                 b.move();
                 System.out.println("Thread name = "
@@ -30,6 +30,6 @@ public class BallThread extends Thread{
         }
         catch (InterruptedException ex) {}
         System.out.println("Finished Thread name : " + Thread.currentThread().getName());
-        ++finishedThreadCount;
+        ++threadCount;
     }
 }
